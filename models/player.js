@@ -12,14 +12,17 @@ mongoose.connect(url)
         console.log('error connecting to MongoDB:', error.message)
     })
 
+const profileSchema = new mongoose.Schema({
+    profile_id: String,
+    game_mode: String,
+    networth: Object
+}, { _id: false })
+
 const playerSchema = new mongoose.Schema({
-    "profile_id": String,
-    "networth": {
-        "type": [
-          "Mixed"
-        ]
-      }
-})
+    _id: String,
+    displayName: String,
+    profiles: [profileSchema]
+}, { timestamps: true })
 
 playerSchema.set('toJSON', {
     transform: (document, returnedObject) => {
